@@ -1,0 +1,12 @@
+{
+  "name": "oxid-esales/eshop-demodata-installer",
+  "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
+  "license": "GPL-3.0",
+  "require": {
+    "oxid-esales/eshop-facts": "*",
+    "oxid-esales/eshop-edition-facts": "*"
+  },
+  "bin": [
+    "./oe-eshop-demodata_install"
+  ]
+}
