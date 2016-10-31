@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
+
+$edition = strtolower(realpath(trim(getenv('ESHOP_EDITION'))));
+$oxidPackagesPath = realpath(trim(getenv('ESHOP_OXID_VENDOR_PATH')));
+$outPath = realpath(trim(getenv('ESHOP_SOURCE_PATH')).'/out');
+
+$demodataPath = "$oxidPackagesPath/oxideshop-demodata-$edition/src/out";
+
+$fileSystem = new Filesystem();
+
+try {
+    $fileSystem->mirror($demodataPath, $outPath);
+} catch (IOException $exception) {
+    $items = [
+        "Error occurred while copying files:",
+        $exception->getMessage(),
+        "\n"
+    ];
+    $message = implode(" ", $items);
+    echo $message;
+    exit(1);
+}
+
+exit(0);
