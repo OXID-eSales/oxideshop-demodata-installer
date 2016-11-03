@@ -16,5 +16,3 @@ function execute_installation {
 }
 
 main
-
-exit 0
