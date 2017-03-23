@@ -10,7 +10,8 @@ function main {
 }
 
 function execute_installation {
-    local GET_DEMODATA_PATH="$ESHOP_OXID_VENDOR_PATH/oxideshop-demodata-${ESHOP_EDITION,,}/src/out"
+    local LC_ESHOP_EDITION=`${ESHOP_PHP_BIN_PATH} -r "echo strtolower(\"${ESHOP_EDITION}\");"`
+    local GET_DEMODATA_PATH="$ESHOP_OXID_VENDOR_PATH/oxideshop-demodata-${LC_ESHOP_EDITION}/src/out"
 
     cp -r $GET_DEMODATA_PATH "$ESHOP_SOURCE_PATH"
 }
