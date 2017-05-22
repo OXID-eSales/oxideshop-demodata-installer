@@ -12,4 +12,4 @@ install:
   - composer install
 
 script:
-  - vendor/bin/phpunit Tests
+  - vendor/bin/phpunit tests

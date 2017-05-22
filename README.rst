@@ -1,4 +1,4 @@
-OXID eShop demodata installer
+OXID eShop DemoData installer
 =============================
 
 .. image:: https://travis-ci.org/OXID-eSales/oxideshop-demodata-installer.svg?branch=master
