@@ -7,3 +7,6 @@
 
 # OS
 .DS_Store
+
+# Temporary folders
+/tests/tmp/
