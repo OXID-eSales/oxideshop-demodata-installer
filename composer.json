@@ -1,7 +1,7 @@
 {
   "name": "oxid-esales/oxideshop-demodata-installer",
   "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-only",
   "require": {
     "php": ">=5.6",
     "symfony/filesystem": "^3.2",
