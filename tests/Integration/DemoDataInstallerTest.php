@@ -27,7 +27,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use OxidEsales\DemoDataInstaller\DemoDataPathSelector;
 use OxidEsales\DemoDataInstaller\DemoDataInstaller;
 
-class DemoDataInstallerTest extends \PHPUnit_Framework_TestCase
+class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
 {
     private $temporaryPath;
     private $vendorPath;
@@ -86,7 +86,9 @@ class DemoDataInstallerTest extends \PHPUnit_Framework_TestCase
 
     private function buildDemoDataInstaller()
     {
-        $facts = $this->getMock('Facts', ['getVendorPath', 'getOutPath']);
+        $facts = $this->getMockBuilder('Facts')
+            ->setMethods(['getVendorPath', 'getOutPath'])
+            ->getMock();
         $facts->expects($this->any())->method('getVendorPath')->willReturn($this->vendorPath);
         $facts->expects($this->any())->method('getOutPath')->willReturn($this->targetPath);
 

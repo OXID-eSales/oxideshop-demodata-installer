@@ -23,14 +23,16 @@ namespace OxidEsales\DemoDataInstaller\Tests\Unit;
 
 use OxidEsales\DemoDataInstaller\DemoDataPathSelector;
 
-class DemoDataPathSelectorTest extends \PHPUnit_Framework_TestCase
+class DemoDataPathSelectorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider providerGetPathWithoutVendorPath
      */
     public function testGetPathWithoutVendorPath($edition, $expectedPath)
     {
-        $facts = $this->getMock('Facts', ['getVendorPath']);
+        $facts = $this->getMockBuilder('Facts')
+            ->setMethods(['getVendorPath'])
+            ->getMock();
         $demoDataPathSelector = new DemoDataPathSelector($facts, $edition);
         $this->assertEquals($expectedPath, $demoDataPathSelector->getPath());
     }
@@ -49,7 +51,9 @@ class DemoDataPathSelectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPathWithVendorPath($edition, $expectedPath)
     {
-        $facts = $this->getMock('Facts', ['getVendorPath']);
+        $facts = $this->getMockBuilder('Facts')
+            ->setMethods(['getVendorPath'])
+            ->getMock();
         $facts->expects($this->any())->method('getVendorPath')->willReturn('vendor');
         $demoDataPathSelector = new DemoDataPathSelector($facts, $edition);
         $this->assertEquals($expectedPath, $demoDataPathSelector->getPath());

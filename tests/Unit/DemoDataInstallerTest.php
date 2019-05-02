@@ -26,7 +26,7 @@ use OxidEsales\DemoDataInstaller\DemoDataInstaller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
-class DemoDataInstallerTest extends \PHPUnit_Framework_TestCase
+class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
 {
     public function testNoDemoDataFound()
     {
@@ -72,10 +72,16 @@ class DemoDataInstallerTest extends \PHPUnit_Framework_TestCase
 
     public function testErrorOccurs()
     {
-        $filesystem = $this->getMock('Filesystem', ['mirror']);
+        $filesystem = $this->getMockBuilder('Filesystem')
+            ->setMethods(['mirror'])
+            ->getMock();
         $filesystem->expects($this->any())->method('mirror')->willThrowException(new IOException('Test'));
-        $facts = $this->getMock('Facts', ['getVendorPath', 'getOutPath']);
-        $demoDataPathSelector = $this->getMock('DemodataPathSelector', ['getPath']);
+        $facts = $this->getMockBuilder('Facts')
+            ->setMethods(['getVendorPath', 'getOutPath'])
+            ->getMock();
+        $demoDataPathSelector = $this->getMockBuilder('DemodataPathSelector')
+            ->setMethods(['getPath'])
+            ->getMock();
 
         $demoDataInstaller = new DemoDataInstaller($facts, $demoDataPathSelector, $filesystem);
 
@@ -94,10 +100,14 @@ class DemoDataInstallerTest extends \PHPUnit_Framework_TestCase
 
         $filesystem = new Filesystem();
 
-        $facts = $this->getMock('Facts', ['getVendorPath', 'getOutPath']);
+        $facts = $this->getMockBuilder('Facts')
+            ->setMethods(['getVendorPath', 'getOutPath'])
+            ->getMock();
         $facts->expects($this->any())->method('getOutPath')->willReturn($outPath);
 
-        $demoDataPathSelector = $this->getMock('DemodataPathSelector', ['getPath']);
+        $demoDataPathSelector = $this->getMockBuilder('DemodataPathSelector')
+            ->setMethods(['getPath'])
+            ->getMock();
         $demoDataPathSelector->expects($this->any())->method('getPath')->willReturn($demoDataPath);
 
         return new DemoDataInstaller($facts, $demoDataPathSelector, $filesystem);
