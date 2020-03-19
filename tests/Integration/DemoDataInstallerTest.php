@@ -33,7 +33,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
     private $vendorPath;
     private $targetPath;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->temporaryPath = Path::join(__DIR__, '..', 'tmp');
         $this->vendorPath = Path::join(__DIR__, '..', 'tmp', 'testData');
@@ -41,13 +41,13 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $this->buildDirectory();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $filesystem = new Filesystem();
         $filesystem->remove($this->temporaryPath);
     }
 
-    public function testExecuteDemoDataInstaller()
+    public function testExecuteDemoDataInstaller(): void
     {
         $demoDataInstaller = $this->buildDemoDataInstaller();
 
@@ -55,7 +55,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(4, $this->countFiles($this->targetPath));
     }
 
-    private function buildDirectory()
+    private function buildDirectory(): void
     {
         $structure = [
             'oxid-esales' => [
@@ -84,6 +84,9 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $filesystem->mirror($pathBlueprint, $this->vendorPath);
     }
 
+    /**
+     * @return DemoDataInstaller
+     */
     private function buildDemoDataInstaller()
     {
         $facts = $this->getMockBuilder('Facts')
@@ -100,6 +103,11 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         return new DemoDataInstaller($facts, $demoDataPathSelector, $filesystem);
     }
 
+    /**
+     * @param $path
+     *
+     * @return int|void
+     */
     private function countFiles($path)
     {
         return count(array_diff(scandir($path), ['.', '..']));
