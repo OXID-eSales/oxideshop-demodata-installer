@@ -1,10 +1,22 @@
-OXID eShop DemoData installer
-=============================
+# OXID eShop DemoData installer
 
 .. image:: https://travis-ci.org/OXID-eSales/oxideshop-demodata-installer.svg?branch=master
     :target: https://travis-ci.org/OXID-eSales/oxideshop-demodata-installer
 
 This component provides a way for OXID eShop setup functionality to copy demodata images.
+
+## Installation
+  
+This component is installable via composer:
+
+```
+composer require --dev oxid-esales/oxideshop-demodata-installer
+```
+
+## Requirements
+
+* master branch is compatible with OXID eShop compilation master
+* b-6.2.x branch is compatible with OXID eShop compilation 6.x (>=6.2.x)
 
 Bugs and Issues
 ---------------
