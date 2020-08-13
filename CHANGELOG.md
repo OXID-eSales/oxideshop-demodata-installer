@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+- Add install demodata command, to install demodata after shop setup
+
 ### Changed
 - Update symfony components to version 5
 

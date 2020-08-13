@@ -83,6 +83,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
             ->setMethods(['getPath'])
             ->getMock();
 
+        $this->expectOutputString('Error occurred while copying files: Test ' . PHP_EOL);
         $demoDataInstaller = new DemoDataInstaller($facts, $demoDataPathSelector, $filesystem);
 
         $this->assertSame(1, $demoDataInstaller->execute());

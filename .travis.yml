@@ -10,5 +10,29 @@ php:
 install:
   - composer install
 
+env: TRAVIS_ERROR_LEVEL=32767 OX_BASE_PATH="$TRAVIS_BUILD_DIR/source/"
+
+services: mysql
+
+before_install:
+  - echo 'Europe/Berlin' | sudo tee /etc/timezone
+
+before_script:
+  # database setup
+  - sudo sed -e 's|utf8_unicode_ci|latin1_general_ci|g; s|utf8|latin1|g' --in-place /etc/mysql/my.cnf
+  - sudo service mysql restart
+
+  # replace configuration values in config.inc.php
+  - cp vendor/oxid-esales/oxideshop-ce/source/config.inc.php.dist vendor/oxid-esales/oxideshop-ce/source/config.inc.php
+
+  # set permissions to log directory
+  - chmod -R 777 "${TRAVIS_BUILD_DIR}/vendor/oxid-esales/oxideshop-ce/source/log"
+
+  # composer initiation
+  - cd vendor/oxid-esales/oxideshop-ce/
+  - COMPOSER_MEMORY_LIMIT=-1 SHOP_PATH='source' SHOP_TESTS_PATH='tests' MODULES_PATH='' composer install
+  - bin/oe-console oe:setup:shop --db-host localhost --db-port 3306 --db-name oxideshop --db-user root --db-password '' --shop-url http://localhost --shop-directory $(echo $TRAVIS_BUILD_DIR)/vendor/oxid-esales/oxideshop-ce/source --compile-directory $(echo $TRAVIS_BUILD_DIR)/vendor/oxid-esales/oxideshop-ce/source/tmp --admin-email info@oxid-esales.com --admin-password test1234
+  - cd $TRAVIS_BUILD_DIR
+
 script:
-  - vendor/bin/phpunit tests
+  - vendor/bin/phpunit --bootstrap=vendor/oxid-esales/oxideshop-ce/source/bootstrap.php tests/

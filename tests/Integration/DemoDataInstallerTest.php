@@ -36,9 +36,8 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
     public function setUp(): void
     {
         $this->temporaryPath = Path::join(__DIR__, '..', 'tmp');
-        $this->vendorPath = Path::join(__DIR__, '..', 'tmp', 'testData');
+        $this->vendorPath = Path::join(__DIR__, 'Fixtures');
         $this->targetPath = Path::join(__DIR__, '..', 'tmp', 'testTarget');
-        $this->buildDirectory();
     }
 
     public function tearDown(): void
@@ -53,35 +52,6 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
 
         $this->assertSame(0, $demoDataInstaller->execute());
         $this->assertSame(4, $this->countFiles($this->targetPath));
-    }
-
-    private function buildDirectory(): void
-    {
-        $structure = [
-            'oxid-esales' => [
-                'oxideshop-demodata-ce' => [
-                    'src' => [
-                        'out' => [
-                            'pictures' => [
-                                'picture1' => 'picture 1',
-                                'picture2' => 'picture 2'
-                            ],
-                            'file1' => 'file 1',
-                            'file2' => 'file 2',
-                            'file3' => 'file 3'
-                        ]
-                    ]
-                ]
-            ]
-        ];
-
-        vfsStream::setup('root', null, $structure);
-        $pathBlueprint = vfsStream::url('root');
-
-        $filesystem = new Filesystem();
-
-        $filesystem->remove($this->vendorPath);
-        $filesystem->mirror($pathBlueprint, $this->vendorPath);
     }
 
     /**
