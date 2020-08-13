@@ -24,8 +24,5 @@
     "psr-4": { "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/" }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true,
-  "bin": [
-    "./bin/oe-eshop-demodata_install"
-  ]
+  "prefer-stable": true
 }
