@@ -58,18 +58,29 @@ class DemodataDao implements DemodataDaoInterface
     public function checkPreconditions(): void
     {
         $aggregateException = new AggregateException();
-        
+
+        $messages = [];
         if ($this->countOxarticles() !== 0) {
-            $aggregateException->add(new DemodataException('Oxarticles is not empty.'));
+            $messages[] = 'Please truncate the database table oxarticles.';
         }
         if ($this->countOxcategories() !== 0) {
-            $aggregateException->add(new DemodataException('Oxcategories is not empty.'));
+            $messages[] = 'Please truncate the database table oxcategories.';
         }
         if (!file_exists($this->getActiveEditionDemodataPackageSqlFilePath())) {
-            $aggregateException->add(new DemodataException('Demodata is not installed.'));
+            $messages[] = 'Package oxid-esales/' .
+                       sprintf(self::DEMODATA_PACKAGE_NAME, strtolower($this->basicContext->getEdition())) .
+                       ' was not found. Please ensure that demodata is available';
         }
         if (!is_readable($this->getActiveEditionDemodataPackageSqlFilePath())) {
-            $aggregateException->add(new DemodataException($this->getActiveEditionDemodataPackageSqlFilePath . ' is not readable.'));
+            $messages[] = 'Demodata sql file is not readable (' .
+                       $this->getActiveEditionDemodataPackageSqlFilePath() .
+                       '). Please make it readable.';
+        }
+
+        if (count($messages)) {
+            foreach ($messages as $message) {
+                $aggregateException->add(new DemodataException($message));
+            }
         }
 
         if ($aggregateException->hasExceptions()) {

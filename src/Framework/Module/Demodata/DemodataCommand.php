@@ -48,10 +48,11 @@ class DemodataCommand extends Command
             $output->writeln('<info>Applying demodata</info>');
             $this->demodataDao->applyDemodata();
         } catch (AggregateException $aggregateException) {
-            $output->writeln('<error>If you want to install demodata please fix following problems:</error>');
+            $message = 'We found problems which prevent the execution of the command, please fix them:';
+            $output->writeln('<error>' . $message . '</error>');
             $exeptions = $aggregateException->getExceptions();
             foreach ($exeptions as $exeption) {
-                $output->writeln('<error>' . $exeption->getMessage() . '</error>');
+                $output->writeln('<error> - ' . $exeption->getMessage() . '</error>');
             }
         }
 
