@@ -60,6 +60,9 @@ class DemodataDao implements DemodataDaoInterface
         $aggregateException = new AggregateException();
 
         $messages = [];
+        if ($this->countOxuser() !== 0) {
+            $messages[] = 'There are some submitted users in the shop. Please delete them and their dependencies as well.';
+        }
         if ($this->countOxarticles() !== 0) {
             $messages[] = 'Please truncate the database table oxarticles.';
         }
@@ -86,6 +89,15 @@ class DemodataDao implements DemodataDaoInterface
         if ($aggregateException->hasExceptions()) {
             throw $aggregateException;
         }
+    }
+
+    private function countOxuser(): int
+    {
+        $queryBuilder = $this->queryBuilderFactory->create();
+        $queryBuilder->select('count(*) as count')
+            ->from('oxuser');
+
+        return (int)$queryBuilder->execute()->fetchColumn();
     }
 
     private function countOxarticles(): int
