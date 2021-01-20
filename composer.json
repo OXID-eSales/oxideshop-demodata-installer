@@ -4,7 +4,7 @@
   "license": "GPL-3.0-only",
   "require": {
     "php": ">=7.0",
-    "symfony/filesystem": "^3.4",
+    "symfony/filesystem": "^3.4 | ^4.4.17",
     "oxid-esales/oxideshop-facts": "dev-b-6.3.x"
   },
   "require-dev": {
