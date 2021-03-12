@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - License file
 
 ### Changed
-- Readme changed to md [README.md](https://github.com/OXID-eSales/oxideshop-demodata-installer/blob/master/README.md)
+- [Readme file](README.md) changed to markdown format
 - Update PHPUnit version
 
 ### Removed
@@ -45,8 +45,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Demodatainstaller command to copy demodata files
 
-[v1.1.3]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.2....v1.1.3
-[v1.1.2]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.1....v1.1.2
-[v1.1.1]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.0....v1.1.1
-[v1.1.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0....v1.1.0
-[v1.0.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0....v1.0.0
+[v1.1.3]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.2...v1.1.3
+[v1.1.2]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.1...v1.1.2
+[v1.1.1]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.0...v1.1.1
+[v1.1.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0...v1.1.0
+[v1.0.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0...v1.0.0
