@@ -4,10 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v1.1.3] - unreleased
+## [v1.1.3] - 2021-03-12
+
+### Added
+- Bugs and Issue section in readme
+- License file
 
 ### Changed
-- Readme changed to md
+- Readme changed to md [README.md](https://github.com/OXID-eSales/oxideshop-demodata-installer/blob/master/README.md)
+- Update PHPUnit version
+
+### Removed
+- Support for PHP 5.6
 
 ## [v1.1.2] - 2018-01-25
 
