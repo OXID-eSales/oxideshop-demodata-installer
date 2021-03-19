@@ -12,10 +12,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Update symfony components to version 5
 
-## [v1.1.3] - unreleased
+## [v1.1.3] - 2021-03-12
+
+### Added
+- Bugs and Issue section in readme
+- License file
 
 ### Changed
-- Readme changed to md
+- [Readme file](README.md) changed to markdown format
+- Update PHPUnit version
+
+### Removed
+- Support for PHP 5.6
 
 ## [v1.1.2] - 2018-01-25
 
@@ -45,8 +53,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Demodatainstaller command to copy demodata files
 
-[v1.1.3]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.2....v1.1.3
-[v1.1.2]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.1....v1.1.2
-[v1.1.1]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.0....v1.1.1
-[v1.1.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0....v1.1.0
-[v1.0.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0....v1.0.0
+[v1.1.3]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.2...v1.1.3
+[v1.1.2]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.1...v1.1.2
+[v1.1.1]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.0...v1.1.1
+[v1.1.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0...v1.1.0
+[v1.0.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0...v1.0.0
