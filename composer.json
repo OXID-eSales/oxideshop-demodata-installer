@@ -13,7 +13,7 @@
     "mikey179/vfsstream": "^1.6",
     "webmozart/path-util": ">=2.3",
     "oxid-esales/oxideshop-ce": "dev-master",
-    "oxid-esales/oxideshop-unified-namespace-generator": "dev-master"
+    "oxid-esales/oxideshop-unified-namespace-generator": "^3.0.0"
   },
   "autoload": {
     "psr-4": {
