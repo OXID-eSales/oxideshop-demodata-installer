@@ -3,7 +3,7 @@
   "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
   "license": "GPL-3.0-only",
   "require": {
-    "php": "^7.3 || ^8.0",
+    "php": "^7.4 || ^8.0",
     "symfony/filesystem": "^4.4.17",
     "oxid-esales/oxideshop-facts": "^2.4.0"
   },
