@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales Demo Data Installer.
  *
@@ -19,35 +20,40 @@
  * @copyright (C) OXID eSales AG 2003-2017
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\DemoDataInstaller\Tests\Integration;
 
 use org\bovigo\vfs\vfsStream;
-use Webmozart\PathUtil\Path;
-use Symfony\Component\Filesystem\Filesystem;
-use OxidEsales\DemoDataInstaller\DemoDataPathSelector;
 use OxidEsales\DemoDataInstaller\DemoDataInstaller;
+use OxidEsales\DemoDataInstaller\DemoDataPathSelector;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
+use Webmozart\PathUtil\Path;
 
-class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
+final class DemoDataInstallerTest extends TestCase
 {
     private $temporaryPath;
     private $vendorPath;
     private $targetPath;
 
-    public function setUp()
+    protected function setUp(): void
     {
+        parent::setUp();
         $this->temporaryPath = Path::join(__DIR__, '..', 'tmp');
         $this->vendorPath = Path::join(__DIR__, '..', 'tmp', 'testData');
         $this->targetPath = Path::join(__DIR__, '..', 'tmp', 'testTarget');
         $this->buildDirectory();
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         $filesystem = new Filesystem();
         $filesystem->remove($this->temporaryPath);
+        parent::tearDown();
     }
 
-    public function testExecuteDemoDataInstaller()
+    public function testExecuteDemoDataInstaller(): void
     {
         $demoDataInstaller = $this->buildDemoDataInstaller();
 
@@ -55,7 +61,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(4, $this->countFiles($this->targetPath));
     }
 
-    private function buildDirectory()
+    private function buildDirectory(): void
     {
         $structure = [
             'oxid-esales' => [
@@ -84,7 +90,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $filesystem->mirror($pathBlueprint, $this->vendorPath);
     }
 
-    private function buildDemoDataInstaller()
+    private function buildDemoDataInstaller(): DemoDataInstaller
     {
         $facts = $this->getMockBuilder('Facts')
             ->setMethods(['getVendorPath', 'getOutPath'])
@@ -100,7 +106,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         return new DemoDataInstaller($facts, $demoDataPathSelector, $filesystem);
     }
 
-    private function countFiles($path)
+    private function countFiles($path): int
     {
         return count(array_diff(scandir($path), ['.', '..']));
     }

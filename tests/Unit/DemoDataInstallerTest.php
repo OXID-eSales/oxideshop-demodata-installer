@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales Demo Data Installer.
  *
@@ -19,16 +20,19 @@
  * @copyright (C) OXID eSales AG 2003-2017
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\DemoDataInstaller\Tests\Unit;
 
 use org\bovigo\vfs\vfsStream;
 use OxidEsales\DemoDataInstaller\DemoDataInstaller;
-use Symfony\Component\Filesystem\Filesystem;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 
-class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
+final class DemoDataInstallerTest extends TestCase
 {
-    public function testNoDemoDataFound()
+    public function testNoDemoDataFound(): void
     {
         $structure = [
             'source' => [
@@ -47,7 +51,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $this->countFiles($outPath), 'Directory is not empty.');
     }
 
-    public function testDemoDataExist()
+    public function testDemoDataExist(): void
     {
         $structure = [
             'source' => [
@@ -70,7 +74,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3, $this->countFiles($outPath), 'Files have not been copied.');
     }
 
-    public function testErrorOccurs()
+    public function testErrorOccurs(): void
     {
         $filesystem = $this->getMockBuilder('Filesystem')
             ->setMethods(['mirror'])
@@ -88,12 +92,12 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(1, $demoDataInstaller->execute());
     }
 
-    private function getOutPath()
+    private function getOutPath(): string
     {
         return vfsStream::url('root/source/out');
     }
 
-    private function buildDemoDataInstaller()
+    private function buildDemoDataInstaller(): DemoDataInstaller
     {
         $outPath = $this->getOutPath();
         $demoDataPath = vfsStream::url('root/vendor/demodata-directory');
@@ -113,7 +117,7 @@ class DemoDataInstallerTest extends \PHPUnit\Framework\TestCase
         return new DemoDataInstaller($facts, $demoDataPathSelector, $filesystem);
     }
 
-    private function countFiles($path)
+    private function countFiles($path): int
     {
         return count(array_diff(scandir($path), ['.', '..']));
     }

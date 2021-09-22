@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales Demo Data Installer.
  *
@@ -19,16 +20,19 @@
  * @copyright (C) OXID eSales AG 2003-2017
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\DemoDataInstaller\Tests\Unit;
 
 use OxidEsales\DemoDataInstaller\DemoDataPathSelector;
+use PHPUnit\Framework\TestCase;
 
-class DemoDataPathSelectorTest extends \PHPUnit\Framework\TestCase
+final class DemoDataPathSelectorTest extends TestCase
 {
     /**
      * @dataProvider providerGetPathWithoutVendorPath
      */
-    public function testGetPathWithoutVendorPath($edition, $expectedPath)
+    public function testGetPathWithoutVendorPath($edition, $expectedPath): void
     {
         $facts = $this->getMockBuilder('Facts')
             ->setMethods(['getVendorPath'])
@@ -37,19 +41,19 @@ class DemoDataPathSelectorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedPath, $demoDataPathSelector->getPath());
     }
 
-    public function providerGetPathWithoutVendorPath()
+    public function providerGetPathWithoutVendorPath(): array
     {
         return [
-            ['CE', $this->getPathToOut('oxid-esales'.DIRECTORY_SEPARATOR.'oxideshop-demodata-ce')],
-            ['PE', $this->getPathToOut('oxid-esales'.DIRECTORY_SEPARATOR.'oxideshop-demodata-pe')],
-            ['EE', $this->getPathToOut('oxid-esales'.DIRECTORY_SEPARATOR.'oxideshop-demodata-ee')]
+            ['CE', $this->getPathToOut('oxid-esales' . DIRECTORY_SEPARATOR . 'oxideshop-demodata-ce')],
+            ['PE', $this->getPathToOut('oxid-esales' . DIRECTORY_SEPARATOR . 'oxideshop-demodata-pe')],
+            ['EE', $this->getPathToOut('oxid-esales' . DIRECTORY_SEPARATOR . 'oxideshop-demodata-ee')]
         ];
     }
 
     /**
      * @dataProvider providerGetPathWithVendorPath
      */
-    public function testGetPathWithVendorPath($edition, $expectedPath)
+    public function testGetPathWithVendorPath($edition, $expectedPath): void
     {
         $facts = $this->getMockBuilder('Facts')
             ->setMethods(['getVendorPath'])
@@ -59,12 +63,12 @@ class DemoDataPathSelectorTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expectedPath, $demoDataPathSelector->getPath());
     }
 
-    public function providerGetPathWithVendorPath()
+    public function providerGetPathWithVendorPath(): array
     {
         return [
-            ['CE', $this->getPathToOut('vendor'.DIRECTORY_SEPARATOR.'oxid-esales'.DIRECTORY_SEPARATOR.'oxideshop-demodata-ce')],
-            ['PE', $this->getPathToOut('vendor'.DIRECTORY_SEPARATOR.'oxid-esales'.DIRECTORY_SEPARATOR.'oxideshop-demodata-pe')],
-            ['EE', $this->getPathToOut('vendor'.DIRECTORY_SEPARATOR.'oxid-esales'.DIRECTORY_SEPARATOR.'oxideshop-demodata-ee')]
+            ['CE', $this->getPathToOut('vendor' . DIRECTORY_SEPARATOR . 'oxid-esales' . DIRECTORY_SEPARATOR . 'oxideshop-demodata-ce')],
+            ['PE', $this->getPathToOut('vendor' . DIRECTORY_SEPARATOR . 'oxid-esales' . DIRECTORY_SEPARATOR . 'oxideshop-demodata-pe')],
+            ['EE', $this->getPathToOut('vendor' . DIRECTORY_SEPARATOR . 'oxid-esales' . DIRECTORY_SEPARATOR . 'oxideshop-demodata-ee')]
         ];
     }
 
@@ -75,7 +79,7 @@ class DemoDataPathSelectorTest extends \PHPUnit\Framework\TestCase
      *
      * @return string
      */
-    private function getPathToOut($basePath)
+    private function getPathToOut($basePath): string
     {
         $fullPath = [$basePath, 'src', 'out'];
 

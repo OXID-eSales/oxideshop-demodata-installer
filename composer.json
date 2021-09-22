@@ -3,13 +3,13 @@
   "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
   "license": "GPL-3.0-only",
   "require": {
-    "php": ">=7.0",
-    "symfony/filesystem": "^3.4 | ^4.4.17",
+    "php": "^7.3 || ^8.0",
+    "symfony/filesystem": "^4.4.17",
     "oxid-esales/oxideshop-facts": "^2.4.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~6",
-    "mikey179/vfsstream": "^1.6",
+    "phpunit/phpunit": "^8.5.14",
+    "mikey179/vfsstream": "~1.6.8",
     "webmozart/path-util": ">=2.3"
   },
   "autoload": {
@@ -18,7 +18,9 @@
     }
   },
   "autoload-dev": {
-    "psr-4": { "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/" }
+    "psr-4": {
+      "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/"
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
