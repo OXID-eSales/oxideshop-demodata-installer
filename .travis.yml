@@ -31,7 +31,8 @@ before_script:
   # composer initiation
   - cd vendor/oxid-esales/oxideshop-ce/
   - COMPOSER_MEMORY_LIMIT=-1 SHOP_PATH='source' SHOP_TESTS_PATH='tests' MODULES_PATH='' composer install
-  - bin/oe-console oe:setup:shop --db-host localhost --db-port 3306 --db-name oxideshop --db-user root --db-password '' --shop-url http://localhost --shop-directory $(echo $TRAVIS_BUILD_DIR)/vendor/oxid-esales/oxideshop-ce/source --compile-directory $(echo $TRAVIS_BUILD_DIR)/vendor/oxid-esales/oxideshop-ce/source/tmp --admin-email info@oxid-esales.com --admin-password test1234
+  - bin/oe-console oe:setup:shop --db-host localhost --db-port 3306 --db-name oxideshop --db-user root --db-password '' --shop-url http://localhost --shop-directory $(echo $TRAVIS_BUILD_DIR)/vendor/oxid-esales/oxideshop-ce/source --compile-directory $(echo $TRAVIS_BUILD_DIR)/vendor/oxid-esales/oxideshop-ce/source/tmp
+  - bin/oe-console oe:admin:create-user  --admin-email info@oxid-esales.com --admin-password test1234
   - cd $TRAVIS_BUILD_DIR
 
 script:
