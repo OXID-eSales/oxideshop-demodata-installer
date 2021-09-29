@@ -4,7 +4,7 @@
   "license": "GPL-3.0-only",
   "type": "oxideshop-component",
   "require": {
-    "php": ">=7.3",
+    "php": ">=7.4",
     "symfony/filesystem": "^5.0.4",
     "oxid-esales/oxideshop-facts": "^3.0.0"
   },
@@ -21,7 +21,9 @@
     }
   },
   "autoload-dev": {
-    "psr-4": { "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/" }
+    "psr-4": {
+      "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/"
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
