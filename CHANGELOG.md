@@ -4,13 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-
-## [v1.3.0] - Unreleased
+## [v1.3.0] - 2021-11-26
 
 ### Removed
 - Support for PHP 7.3
-
-## [v1.2.1] - Unreleased
 
 ### Fixed
 - Update tests
