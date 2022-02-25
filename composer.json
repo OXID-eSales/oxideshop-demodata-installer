@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.4",
     "symfony/filesystem": "^5.0.4",
-    "oxid-esales/oxideshop-facts": "^3.0.0"
+    "oxid-esales/oxideshop-facts": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "~9",
