@@ -4,14 +4,14 @@
   "license": "GPL-3.0-only",
   "type": "oxideshop-component",
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.0",
     "oxid-esales/oxideshop-facts": "*",
-    "symfony/filesystem": "^5.0.4"
+    "symfony/filesystem": "*"
   },
   "require-dev": {
     "mikey179/vfsstream": "^1.6",
-    "oxid-esales/oxideshop-ce": "dev-master",
-    "oxid-esales/oxideshop-unified-namespace-generator": "^3.0.0",
+    "oxid-esales/oxideshop-ce": "dev-b-7.0.x",
+    "oxid-esales/oxideshop-unified-namespace-generator": "dev-b-7.0.x",
     "phpunit/phpunit": "~9",
     "webmozart/path-util": ">=2.3"
   },
