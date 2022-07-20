@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.0] - 2022-07-20
+
+### Added
+- Support Symfony v5
+
 ## [v1.3.0] - 2021-11-26
 
 ### Removed
@@ -32,7 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v1.1.2] - 2018-01-25
 
-### Changed 
+### Changed
 - Change license ID according to new format
 
 ## [v1.1.1] - 2017-07-21
@@ -58,6 +63,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Demodatainstaller command to copy demodata files
 
+[v1.4.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.3...v1.2.0
 [v1.1.3]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.2...v1.1.3
