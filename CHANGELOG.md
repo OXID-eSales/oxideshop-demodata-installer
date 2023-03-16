@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - License updated
 
+### Removed
+- Dependency to webmozart/path-util
+
 ## [v3.0.0] - 2022-10-06
 
 ### Removed
