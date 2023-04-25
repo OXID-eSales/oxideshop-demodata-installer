@@ -15,10 +15,8 @@ composer require --dev oxid-esales/oxideshop-demodata-installer
 
 ## Requirements
 
-* master branch is compatible with OXID eShop compilation master
-* b-6.4.x branch is compatible with OXID eShop compilation 6.4.x
-* b-6.3.x branch is compatible with OXID eShop compilation 6.3.x
-* b-6.2.x branch is compatible with OXID eShop compilation 6.2.x
+* b-7.0.x branch is compatible with OXID eShop compilation 7.0.x
+* b-6.5.x branch is compatible with OXID eShop compilation 6.5.x
 
 Bugs and Issues
 ---------------
