@@ -13,11 +13,6 @@ This component is installable via composer:
 composer require --dev oxid-esales/oxideshop-demodata-installer
 ```
 
-## Requirements
-
-* b-7.0.x branch is compatible with OXID eShop compilation 7.0.x
-* b-6.5.x branch is compatible with OXID eShop compilation 6.5.x
-
 Bugs and Issues
 ---------------
 
