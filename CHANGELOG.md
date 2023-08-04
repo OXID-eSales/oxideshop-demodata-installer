@@ -1,10 +1,6 @@
 # Change Log for OXID eShop Demodata Installer
 
-All notable changes to this project will be documented in this file.
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [v3.1.0] - 2023-04-20
+## v3.1.0 - 2023-04-20
 
 ### Changed
 - License updated
@@ -12,12 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Dependency to webmozart/path-util
 
-## [v3.0.0] - 2022-10-06
+## v3.0.0 - 2022-10-06
 
 ### Removed
 - PHP v7 support
 
-## [v2.0.0] - 2021-07-06
+## v2.0.0 - 2021-07-06
 
 ### Added
 - Add install demodata command, to install demodata after shop setup
@@ -25,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Update symfony components to version 5
 
-## [v1.3.0] - 2021-11-26
+## v1.3.0 - 2021-11-26
 
 ### Removed
 - Support for PHP 7.3
@@ -33,12 +29,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Update tests
 
-## [v1.2.0] - 2021-04-12
+## v1.2.0 - 2021-04-12
 
 ### Changed
 - Support PHP 8
 
-## [v1.1.3] - 2021-03-12
+## v1.1.3 - 2021-03-12
 
 ### Added
 - Bugs and Issue section in readme
@@ -51,12 +47,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Support for PHP 5.6
 
-## [v1.1.2] - 2018-01-25
+## v1.1.2 - 2018-01-25
 
 ### Changed 
 - Change license ID according to new format
 
-## [v1.1.1] - 2017-07-21
+## v1.1.1 - 2017-07-21
 
 ### Added
 - Dependency to webmozart/path-util
@@ -65,7 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Required version of oxid-esales/oxideshop-facts to "^2.0.0"
 - Required minimum-stability to dev in order to be compatible with beta version of facts
 
-## [v1.1.0] - 2017-06-07
+## v1.1.0 - 2017-06-07
 
 ### Added
 - Dependency oxid-esales/oxideshop-facts
@@ -74,18 +70,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Dependency oxid-esales/eshop-facts
 - Dependency oxid-esales/eshop-edition-facts
 
-## [v1.0.0] - 2016-11-03
+## v1.0.0 - 2016-11-03
 
 ### Added
 - Demodatainstaller command to copy demodata files
-
-[v3.1.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v3.0.0...v3.1.0
-[v3.0.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v2.0.0...v3.0.0
-[v2.0.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.3.0...v2.0.0
-[v1.3.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.2.0...v1.3.0
-[v1.2.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.3...v1.2.0
-[v1.1.3]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.2...v1.1.3
-[v1.1.2]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.1...v1.1.2
-[v1.1.1]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.1.0...v1.1.1
-[v1.1.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0...v1.1.0
-[v1.0.0]: https://github.com/OXID-eSales/oxideshop-demodata-installer/compare/v1.0.0...v1.0.0
