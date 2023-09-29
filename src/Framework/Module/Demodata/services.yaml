@@ -7,7 +7,8 @@ services:
         class: OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDao
         arguments:
             Symfony\Component\Filesystem\Filesystem: '@oxid_esales.symfony.file_system'
-    
+        public: true
+
     OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataCommand:
         class: OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataCommand
         tags:
