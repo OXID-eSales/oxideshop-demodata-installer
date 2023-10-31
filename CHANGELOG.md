@@ -1,5 +1,13 @@
 # Change Log for OXID eShop Demodata Installer
 
+## v3.2.0 - unreleased
+
+### Added
+- PHPUnit v10 support
+
+### Removed
+- PHPUnit v9 support
+
 ## v3.1.1 - 2023-11-30
 
 ### Changed

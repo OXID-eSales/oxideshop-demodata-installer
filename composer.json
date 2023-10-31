@@ -12,7 +12,7 @@
     "mikey179/vfsstream": "^1.6",
     "oxid-esales/oxideshop-ce": "^7.0.0",
     "oxid-esales/oxideshop-unified-namespace-generator": "^4.1.0",
-    "phpunit/phpunit": "~9"
+    "phpunit/phpunit": "~10"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
