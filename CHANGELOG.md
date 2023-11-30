@@ -1,5 +1,10 @@
 # Change Log for OXID eShop Demodata Installer
 
+## v3.1.1 - 2023-11-30
+
+### Changed
+- Make services public
+
 ## v3.1.0 - 2023-04-20
 
 ### Changed
