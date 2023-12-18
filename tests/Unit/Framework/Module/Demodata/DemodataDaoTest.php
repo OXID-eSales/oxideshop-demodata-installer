@@ -6,7 +6,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactory;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
-use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDao;
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\Exception\AggregateException;
@@ -14,10 +13,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionProvider;
 
 final class DemodataDaoTest extends TestCase
 {
-    /**
-    *  @var QueryBuilderFactory
-    */
-    private $queryBuilderFactory;
+    private QueryBuilderFactory $queryBuilderFactory;
 
     protected function setUp(): void
     {
@@ -39,7 +35,7 @@ final class DemodataDaoTest extends TestCase
         }
     }
 
-    public function testcheckPreconditions()
+    public function testCheckPreconditions(): void
     {
         $demodataDao = new DemodataDao(
             $this->queryBuilderFactory,
@@ -56,7 +52,7 @@ final class DemodataDaoTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testcheckPreconditionsFailsCategories()
+    public function testCheckPreconditionsFailsCategories(): void
     {
         $demodataDao = new DemodataDao(
             $this->queryBuilderFactory,
@@ -68,14 +64,14 @@ final class DemodataDaoTest extends TestCase
         $queryBuilder->insert('oxcategories')
             ->values(['OXID' => ':oxid'])
             ->setParameter(':oxid', 'test_category');
-        
+
         $queryBuilder->execute();
 
         $this->expectException(AggregateException::class);
         $demodataDao->checkPreconditions();
     }
 
-    public function testcheckPreconditionsFailsArticles()
+    public function testCheckPreconditionsFailsArticles(): void
     {
         $demodataDao = new DemodataDao(
             $this->queryBuilderFactory,
@@ -93,7 +89,7 @@ final class DemodataDaoTest extends TestCase
         $demodataDao->checkPreconditions();
     }
 
-    public function testcheckPreconditionsFailsDemodata()
+    public function testCheckPreconditionsFailsDemodata(): void
     {
         $demodataDao = new DemodataDao(
             $this->queryBuilderFactory,
@@ -108,7 +104,7 @@ final class DemodataDaoTest extends TestCase
         }
     }
 
-    public function testApplyDemodataCopiesFilesAndRunSQL()
+    public function testApplyDemodataCopiesFilesAndRunSQL(): void
     {
         $demodataDao = new DemodataDao(
             $this->queryBuilderFactory,
@@ -131,7 +127,9 @@ final class DemodataDaoTest extends TestCase
 
     private function createContext($vendorPath = __DIR__ . '/Fixtures'): BasicContextInterface
     {
-        $context = $this->getMockBuilder(BasicContext::class)->setMethods(['getVendorPath', 'getEdition'])->getMock();
+        $context = $this->getMockBuilder(BasicContext::class)
+            ->onlyMethods(['getVendorPath', 'getEdition'])
+            ->getMock();
 
         $context->expects($this->any())->method('getVendorPath')->willReturn($vendorPath);
         $context->expects($this->any())->method('getEdition')->willReturn('CE');

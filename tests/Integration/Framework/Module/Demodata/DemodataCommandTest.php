@@ -21,20 +21,15 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class DemodataCommandTest extends TestCase
 {
-    /** @var CommandTester */
-    private $commandTester;
-
-    /**
-    *  @var QueryBuilderFactory
-    */
-    private $queryBuilderFactory;
+    private CommandTester $commandTester;
+    private QueryBuilderFactory $queryBuilderFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->queryBuilderFactory = new QueryBuilderFactory(new ConnectionProvider());
-        
+
         $demodataDao = new DemodataDao(
             $this->queryBuilderFactory,
             $this->createContext(),
@@ -74,8 +69,8 @@ class DemodataCommandTest extends TestCase
 
     private function createContext($vendorPath = __DIR__ . '/Fixtures'): BasicContext
     {
-        $context = $this->getMockBuilder(BasicContext::class)->setMethods(['getFacts'])->getMock();
-        $facts = $this->getMockBuilder(Facts::class)->setMethods(['getVendorPath', 'getEdition'])->getMock();
+        $context = $this->getMockBuilder(BasicContext::class)->onlyMethods(['getFacts'])->getMock();
+        $facts = $this->getMockBuilder(Facts::class)->onlyMethods(['getVendorPath', 'getEdition'])->getMock();
 
         $facts->expects($this->any())->method('getVendorPath')->willReturn($vendorPath);
         $facts->method('getEdition')->willReturn('CE');
