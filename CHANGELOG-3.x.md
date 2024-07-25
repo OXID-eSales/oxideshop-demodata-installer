@@ -1,5 +1,10 @@
 # Change Log for OXID eShop Demodata Installer
 
+## v3.3.0 - Unreleased
+
+### Removed
+- PHP v8.1 support
+
 ## v3.2.0 - 2024-03-15
 
 ### Added
