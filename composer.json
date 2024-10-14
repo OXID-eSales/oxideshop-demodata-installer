@@ -14,7 +14,7 @@
     "oxid-esales/oxideshop-unified-namespace-generator": "^4.1.0",
     "phpunit/phpunit": "^10"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
