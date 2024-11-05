@@ -14,7 +14,6 @@ use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDao;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionProvider;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactory;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
-use OxidEsales\Facts\Facts;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
@@ -32,7 +31,7 @@ class DemodataCommandTest extends TestCase
 
         $demodataDao = new DemodataDao(
             $this->queryBuilderFactory,
-            $this->createContext(),
+            new BasicContext(),
             new Filesystem()
         );
 
@@ -46,9 +45,9 @@ class DemodataCommandTest extends TestCase
         $queryBuilder->delete('oxarticles')->where('OXID LIKE "demodataTestArticle_"');
         $queryBuilder->execute();
 
-        $facts = (new BasicContext())->getFacts();
-        if (file_exists($facts->getOutPath() . 'testfile')) {
-            unlink($facts->getOutPath() . 'testfile');
+        $basicContext = new BasicContext();
+        if (file_exists($basicContext->getOutPath() . 'testfile')) {
+            unlink($basicContext->getOutPath() . 'testfile');
         }
     }
 
@@ -56,8 +55,7 @@ class DemodataCommandTest extends TestCase
     {
         $this->assertSame(0, $this->commandTester->execute([]));
 
-        $facts = (new BasicContext())->getFacts();
-        $this->assertFileExists($facts->getOutPath() . '/testfile');
+        $this->assertFileExists((new BasicContext())->getOutPath() . '/testfile');
 
         $queryBuilder = $this->queryBuilderFactory->create();
 
@@ -65,18 +63,5 @@ class DemodataCommandTest extends TestCase
             ->from('oxarticles');
 
         $this->assertSame(2, (int)$queryBuilder->execute()->fetchColumn());
-    }
-
-    private function createContext($vendorPath = __DIR__ . '/Fixtures'): BasicContext
-    {
-        $context = $this->getMockBuilder(BasicContext::class)->onlyMethods(['getFacts'])->getMock();
-        $facts = $this->getMockBuilder(Facts::class)->onlyMethods(['getVendorPath', 'getEdition'])->getMock();
-
-        $facts->expects($this->any())->method('getVendorPath')->willReturn($vendorPath);
-        $facts->method('getEdition')->willReturn('CE');
-
-        $context->expects($this->any())->method('getFacts')->willReturn($facts);
-
-        return $context;
     }
 }

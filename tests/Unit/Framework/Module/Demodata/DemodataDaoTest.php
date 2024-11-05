@@ -2,6 +2,7 @@
 
 namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Setup\Demodata;
 
+use OxidEsales\EshopCommunity\Internal\Framework\Edition;
 use Symfony\Component\Filesystem\Filesystem;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactory;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
@@ -14,10 +15,12 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionProvider;
 final class DemodataDaoTest extends TestCase
 {
     private QueryBuilderFactory $queryBuilderFactory;
+    private string $testFile;
 
     protected function setUp(): void
     {
         $this->queryBuilderFactory = new QueryBuilderFactory(new ConnectionProvider());
+        $this->testFile = (new BasicContext())->getOutPath() . 'testfile';
     }
 
     protected function tearDown(): void
@@ -29,9 +32,8 @@ final class DemodataDaoTest extends TestCase
         $queryBuilder->delete('oxarticles')->where('OXID = "test_article"');
         $queryBuilder->execute();
 
-        $facts = (new BasicContext())->getFacts();
-        if (file_exists($facts->getOutPath() . 'testfile')) {
-            unlink($facts->getOutPath() . 'testfile');
+        if (file_exists($this->testFile)) {
+            unlink($this->testFile);
         }
     }
 
@@ -114,8 +116,7 @@ final class DemodataDaoTest extends TestCase
 
         $demodataDao->applyDemodata();
 
-        $facts = (new BasicContext())->getFacts();
-        $this->assertFileExists($facts->getOutPath() . '/testfile');
+        $this->assertFileExists($this->testFile);
 
         $queryBuilder = $this->queryBuilderFactory->create();
 
@@ -131,8 +132,8 @@ final class DemodataDaoTest extends TestCase
             ->onlyMethods(['getVendorPath', 'getEdition'])
             ->getMock();
 
-        $context->expects($this->any())->method('getVendorPath')->willReturn($vendorPath);
-        $context->expects($this->any())->method('getEdition')->willReturn('CE');
+        $context->method('getVendorPath')->willReturn($vendorPath);
+        $context->method('getEdition')->willReturn(Edition::Community);
 
         return $context;
     }

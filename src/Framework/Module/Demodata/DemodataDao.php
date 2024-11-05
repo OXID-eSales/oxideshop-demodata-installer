@@ -15,6 +15,8 @@ use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\Exception\AggregateEx
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
+use function sprintf;
+
 class DemodataDao implements DemodataDaoInterface
 {
     private const DEMODATA_PACKAGE_NAME = 'oxideshop-demodata-%s';
@@ -150,16 +152,15 @@ class DemodataDao implements DemodataDaoInterface
         if ($vendorPath) {
             $path[] = $vendorPath;
         }
-        
         array_push(
             $path,
             $this->basicContext->getComposerVendorName(),
             sprintf(
                 self::DEMODATA_PACKAGE_NAME,
-                strtolower($this->basicContext->getEdition())
+                strtolower($this->basicContext->getEdition()->value)
             )
         );
-            
+
         return implode(DIRECTORY_SEPARATOR, $path);
     }
 
