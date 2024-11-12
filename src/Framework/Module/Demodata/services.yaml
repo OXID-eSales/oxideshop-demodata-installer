@@ -1,7 +1,6 @@
 services:
     _defaults:
         autowire: true
-        public: false
 
     OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDaoInterface:
         class: OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDao

@@ -7,61 +7,76 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\EshopCommunity\Tests\Integration\Internal\Container;
+namespace OxidEsales\DemoDataInstaller\Tests\Integration\Framework\Module\Demodata;
 
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataCommand;
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDao;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionProvider;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Edition\Edition;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
+use OxidEsales\EshopCommunity\Tests\ContainerTrait;
+use OxidEsales\EshopCommunity\Tests\DatabaseTrait;
+use OxidEsales\EshopCommunity\Tests\Unit\Internal\BasicContextStub;
+use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 
-class DemodataCommandTest extends TestCase
+final class DemodataCommandTest extends TestCase
 {
-    private CommandTester $commandTester;
-    private QueryBuilderFactory $queryBuilderFactory;
+    use ContainerTrait;
+    use DatabaseTrait;
 
-    protected function setUp(): void
+    private QueryBuilderFactory $queryBuilderFactory;
+    private string $testFile;
+
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->queryBuilderFactory = new QueryBuilderFactory(new ConnectionProvider());
-
-        $demodataDao = new DemodataDao(
-            $this->queryBuilderFactory,
-            new BasicContext(),
-            new Filesystem()
-        );
-
-        $this->commandTester = new CommandTester(new DemodataCommand($demodataDao));
+        $this->queryBuilderFactory = $this->get(QueryBuilderFactoryInterface::class);
+        $this->testFile = Path::join((new BasicContext())->getOutPath(), 'testfile');
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
-        $queryBuilder = $this->queryBuilderFactory->create();
-
-        $queryBuilder->delete('oxarticles')->where('OXID LIKE "demodataTestArticle_"');
-        $queryBuilder->execute();
-
-        $basicContext = new BasicContext();
-        if (file_exists($basicContext->getOutPath() . 'testfile')) {
-            unlink($basicContext->getOutPath() . 'testfile');
+        if (file_exists($this->testFile)) {
+            unlink($this->testFile);
         }
+        $this->setupShopDatabase();
     }
 
     public function testExecuteDemodata(): void
     {
-        $this->assertSame(0, $this->commandTester->execute([]));
+        $commandReturnCode = (new CommandTester(
+            new DemodataCommand(
+                new DemodataDao(
+                    $this->queryBuilderFactory,
+                    $this->getContextStub(),
+                    new Filesystem()
+                )
+            )
+        ))->execute([]);
 
-        $this->assertFileExists((new BasicContext())->getOutPath() . '/testfile');
+        $demoProductsCount = $this->queryBuilderFactory
+            ->create()
+            ->select('count(*) as count')
+            ->from('oxarticles')
+            ->execute()
+            ->fetchColumn();
+        $this->assertSame(0, $commandReturnCode);
+        $this->assertFileExists($this->testFile);
+        $this->assertEquals(2, $demoProductsCount);
+    }
 
-        $queryBuilder = $this->queryBuilderFactory->create();
+    private function getContextStub(): BasicContextStub
+    {
+        $context = new ContextStub();
+        $context->setVendorPath(Path::join(__DIR__, '/Fixtures'));
+        $context->setEdition(Edition::Community);
 
-        $queryBuilder->select('count(*) as count')
-            ->from('oxarticles');
-
-        $this->assertSame(2, (int)$queryBuilder->execute()->fetchColumn());
+        return $context;
     }
 }
