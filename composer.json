@@ -1,18 +1,18 @@
 {
-  "name": "oxid-esales/oxideshop-demodata-installer",
-  "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
-  "license": "proprietary",
-  "type": "oxideshop-component",
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "autoload": {
-    "psr-4": {
-      "OxidEsales\\DemoDataInstaller\\": "./src"
+    "name": "oxid-esales/oxideshop-demodata-installer",
+    "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
+    "license": "proprietary",
+    "type": "oxideshop-component",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "OxidEsales\\DemoDataInstaller\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/"
+        }
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/"
-    }
-  }
 }
