@@ -64,8 +64,8 @@ final class DemodataCommandTest extends TestCase
             ->create()
             ->select('count(*) as count')
             ->from('oxarticles')
-            ->execute()
-            ->fetchColumn();
+            ->fetchFirstColumn();
+
         $this->assertSame(0, $commandReturnCode);
         $this->assertFileExists($this->testFile);
         $this->assertEquals(2, $demoProductsCount);

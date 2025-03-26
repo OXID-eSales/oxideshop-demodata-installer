@@ -139,8 +139,7 @@ final class DemodataDaoTest extends TestCase
             ->create()
             ->select('count(*) as count')
             ->from('oxarticles')
-            ->execute()
-            ->fetchColumn();
+            ->fetchFirstColumn();
 
         $this->assertEquals(2, $demoProductsCount);
     }
@@ -160,8 +159,8 @@ final class DemodataDaoTest extends TestCase
             ->create()
             ->insert('oxarticles')
             ->values(['OXID' => ':oxid'])
-            ->setParameter(':oxid', 'test_article')
-            ->execute();
+            ->setParameter('oxid', 'test_article')
+            ->executeStatement();
     }
 
     private function insertCategories(): void
@@ -170,8 +169,8 @@ final class DemodataDaoTest extends TestCase
             ->create()
             ->insert('oxcategories')
             ->values(['OXID' => ':oxid'])
-            ->setParameter(':oxid', 'test_category')
-            ->execute();
+            ->setParameter('oxid', 'test_category')
+            ->executeStatement();
     }
 
     private function insertUsers(): void
@@ -180,7 +179,7 @@ final class DemodataDaoTest extends TestCase
             ->create()
             ->insert('oxuser')
             ->values(['OXID' => ':oxid'])
-            ->setParameter(':oxid', 'test_category')
-            ->execute();
+            ->setParameter('oxid', 'test_category')
+            ->executeStatement();
     }
 }

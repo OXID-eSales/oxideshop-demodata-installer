@@ -11,6 +11,7 @@ namespace OxidEsales\DemoDataInstaller\Framework\Module\Demodata;
 
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\Exception\AggregateException;
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\Exception\DemodataException;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -22,6 +23,7 @@ use function strtolower;
 class DemodataDao implements DemodataDaoInterface
 {
     public function __construct(
+        private readonly ConnectionFactoryInterface $connectionFactory,
         private readonly QueryBuilderFactoryInterface $queryBuilderFactory,
         private readonly BasicContextInterface $basicContext,
         private readonly Filesystem $filesystem
@@ -74,7 +76,7 @@ class DemodataDao implements DemodataDaoInterface
 
     private function runSql(): void
     {
-        $dbConnection = $this->queryBuilderFactory->create()->getConnection();
+        $dbConnection = $this->connectionFactory->create();
 
         $queries = file_get_contents($this->getDemodataSqlDump());
         $tables = [];
@@ -82,9 +84,9 @@ class DemodataDao implements DemodataDaoInterface
 
         $platform = $dbConnection->getDatabasePlatform();
         foreach ($tables[1] as $tableToTruncate) {
-            $dbConnection->executeUpdate($platform->getTruncateTableSQL($tableToTruncate, true));
+            $dbConnection->executeStatement($platform->getTruncateTableSQL($tableToTruncate, true));
         }
-        $dbConnection->exec($queries);
+        $dbConnection->executeStatement($queries);
     }
 
     private function copyOutFiles(): void
@@ -117,7 +119,6 @@ class DemodataDao implements DemodataDaoInterface
             ->create()
             ->select('count(*) as count')
             ->from($table)
-            ->execute()
-            ->fetchColumn();
+            ->fetchOne();
     }
 }
