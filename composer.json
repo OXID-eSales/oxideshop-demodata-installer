@@ -1,28 +1,28 @@
 {
-  "name": "oxid-esales/oxideshop-demodata-installer",
-  "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
-  "license": "proprietary",
-  "type": "oxideshop-component",
-  "require": {
-    "php": ">=8.2",
-    "oxid-esales/oxideshop-facts": "*",
-    "symfony/filesystem": "*"
-  },
-  "require-dev": {
-    "mikey179/vfsstream": "^1.6",
-    "oxid-esales/oxideshop-ce": "^7.0.0",
-    "oxid-esales/oxideshop-unified-namespace-generator": "^4.1.0"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "autoload": {
-    "psr-4": {
-      "OxidEsales\\DemoDataInstaller\\": "./src"
+    "name": "oxid-esales/oxideshop-demodata-installer",
+    "description": "This tool is used to copy pictures from demo data repository to OXID eShop, during setup process.",
+    "license": "proprietary",
+    "type": "oxideshop-component",
+    "require": {
+        "php": ">=8.2",
+        "oxid-esales/oxideshop-facts": "*",
+        "symfony/filesystem": "*"
+    },
+    "require-dev": {
+        "mikey179/vfsstream": "^1.6",
+        "oxid-esales/oxideshop-ce": "^7.0.0",
+        "oxid-esales/oxideshop-unified-namespace-generator": "^4.1.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "OxidEsales\\DemoDataInstaller\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/"
+        }
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "OxidEsales\\DemoDataInstaller\\Tests\\": "tests/"
-    }
-  }
 }
