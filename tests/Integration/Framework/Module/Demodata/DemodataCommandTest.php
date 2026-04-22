@@ -11,14 +11,14 @@ namespace OxidEsales\DemoDataInstaller\Tests\Integration\Framework\Module\Demoda
 
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataCommand;
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDao;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Edition\Edition;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EshopCommunity\Tests\DatabaseTrait;
-use OxidEsales\EshopCommunity\Tests\Unit\Internal\BasicContextStub;
-use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
@@ -29,15 +29,19 @@ final class DemodataCommandTest extends TestCase
     use ContainerTrait;
     use DatabaseTrait;
 
+    private ConnectionFactoryInterface $connectionFactory;
     private QueryBuilderFactory $queryBuilderFactory;
+    private string $outPath;
     private string $testFile;
 
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->connectionFactory = $this->get(ConnectionFactoryInterface::class);
         $this->queryBuilderFactory = $this->get(QueryBuilderFactoryInterface::class);
-        $this->testFile = Path::join((new BasicContext())->getOutPath(), 'testfile');
+        $this->outPath = (new BasicContext())->getOutPath();
+        $this->testFile = Path::join($this->outPath, 'testfile');
     }
 
     public function tearDown(): void
@@ -46,6 +50,8 @@ final class DemodataCommandTest extends TestCase
             unlink($this->testFile);
         }
         $this->setupShopDatabase();
+
+        parent::tearDown();
     }
 
     public function testExecuteDemodata(): void
@@ -53,8 +59,9 @@ final class DemodataCommandTest extends TestCase
         $commandReturnCode = (new CommandTester(
             new DemodataCommand(
                 new DemodataDao(
+                    $this->connectionFactory,
                     $this->queryBuilderFactory,
-                    $this->getContextStub(),
+                    $this->getContext(),
                     new Filesystem()
                 )
             )
@@ -64,19 +71,20 @@ final class DemodataCommandTest extends TestCase
             ->create()
             ->select('count(*) as count')
             ->from('oxarticles')
-            ->fetchFirstColumn();
+            ->fetchOne();
 
         $this->assertSame(0, $commandReturnCode);
         $this->assertFileExists($this->testFile);
-        $this->assertEquals(2, $demoProductsCount);
+        $this->assertSame(2, (int)$demoProductsCount);
     }
 
-    private function getContextStub(): BasicContextStub
+    private function getContext(): BasicContextInterface
     {
-        $context = new ContextStub();
-        $context->setVendorPath(Path::join(__DIR__, '/Fixtures'));
-        $context->setEdition(Edition::Community);
-
-        return $context;
+        return $this->createConfiguredStub(BasicContextInterface::class, [
+            'getVendorPath' => Path::join(__DIR__, 'Fixtures'),
+            'getComposerVendorName' => 'oxid-esales',
+            'getEdition' => Edition::Community,
+            'getOutPath' => $this->outPath,
+        ]);
     }
 }

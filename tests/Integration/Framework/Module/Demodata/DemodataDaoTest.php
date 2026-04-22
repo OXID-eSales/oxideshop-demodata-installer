@@ -11,14 +11,14 @@ namespace OxidEsales\DemoDataInstaller\Tests\Integration\Framework\Module\Demoda
 
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\DemodataDao;
 use OxidEsales\DemoDataInstaller\Framework\Module\Demodata\Exception\AggregateException;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Edition\Edition;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContext;
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 use OxidEsales\EshopCommunity\Tests\ContainerTrait;
 use OxidEsales\EshopCommunity\Tests\DatabaseTrait;
-use OxidEsales\EshopCommunity\Tests\Unit\Internal\BasicContextStub;
-use OxidEsales\EshopCommunity\Tests\Unit\Internal\ContextStub;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
@@ -29,13 +29,19 @@ final class DemodataDaoTest extends TestCase
     use ContainerTrait;
     use DatabaseTrait;
 
+    private ConnectionFactoryInterface $connectionFactory;
     private QueryBuilderFactory $queryBuilderFactory;
+    private string $outPath;
     private string $testFile;
 
     public function setUp(): void
     {
+        parent::setUp();
+
+        $this->connectionFactory = $this->get(ConnectionFactoryInterface::class);
         $this->queryBuilderFactory = $this->get(QueryBuilderFactoryInterface::class);
-        $this->testFile = Path::join((new BasicContext())->getOutPath(), 'testfile');
+        $this->outPath = (new BasicContext())->getOutPath();
+        $this->testFile = Path::join($this->outPath, 'testfile');
     }
 
     public function tearDown(): void
@@ -44,14 +50,17 @@ final class DemodataDaoTest extends TestCase
             unlink($this->testFile);
         }
         $this->setupShopDatabase();
+
+        parent::tearDown();
     }
 
     #[DoesNotPerformAssertions]
     public function testCheckPreconditions(): void
     {
         (new DemodataDao(
+            $this->connectionFactory,
             $this->queryBuilderFactory,
-            $this->getContextStub(),
+            $this->getContext(),
             new Filesystem()
         ))->checkPreconditions();
     }
@@ -63,8 +72,9 @@ final class DemodataDaoTest extends TestCase
         $this->expectException(AggregateException::class);
 
         (new DemodataDao(
+            $this->connectionFactory,
             $this->queryBuilderFactory,
-            $this->getContextStub(),
+            $this->getContext(),
             new Filesystem()
         ))->checkPreconditions();
     }
@@ -76,8 +86,9 @@ final class DemodataDaoTest extends TestCase
         $this->expectException(AggregateException::class);
 
         (new DemodataDao(
+            $this->connectionFactory,
             $this->queryBuilderFactory,
-            $this->getContextStub(),
+            $this->getContext(),
             new Filesystem()
         ))->checkPreconditions();
     }
@@ -89,8 +100,9 @@ final class DemodataDaoTest extends TestCase
         $this->expectException(AggregateException::class);
 
         (new DemodataDao(
+            $this->connectionFactory,
             $this->queryBuilderFactory,
-            $this->getContextStub(),
+            $this->getContext(),
             new Filesystem()
         ))->checkPreconditions();
     }
@@ -102,8 +114,9 @@ final class DemodataDaoTest extends TestCase
         $this->insertProducts();
         try {
             (new DemodataDao(
+                $this->connectionFactory,
                 $this->queryBuilderFactory,
-                $this->getContextStub(),
+                $this->getContext(),
                 new Filesystem()
             ))->checkPreconditions();
         } catch (AggregateException $aggregateException) {
@@ -113,14 +126,12 @@ final class DemodataDaoTest extends TestCase
 
     public function testCheckPreconditionWithDemodataSourceFilesInaccessible(): void
     {
-        $context = $this->getContextStub();
-        $context->setVendorPath('some-non-existing-path');
-
         $this->expectException(AggregateException::class);
 
         (new DemodataDao(
+            $this->connectionFactory,
             $this->queryBuilderFactory,
-            $context,
+            $this->getContextWithVendorPath('some-non-existing-path'),
             new Filesystem()
         ))->checkPreconditions();
     }
@@ -128,8 +139,9 @@ final class DemodataDaoTest extends TestCase
     public function testApplyDemodataCopiesFilesAndRunsSQL(): void
     {
         (new DemodataDao(
+            $this->connectionFactory,
             $this->queryBuilderFactory,
-            $this->getContextStub(),
+            $this->getContext(),
             new Filesystem()
         ))->applyDemodata();
 
@@ -139,18 +151,24 @@ final class DemodataDaoTest extends TestCase
             ->create()
             ->select('count(*) as count')
             ->from('oxarticles')
-            ->fetchFirstColumn();
+            ->fetchOne();
 
-        $this->assertEquals(2, $demoProductsCount);
+        $this->assertSame(2, (int)$demoProductsCount);
     }
 
-    private function getContextStub(): BasicContextStub
+    private function getContext(): BasicContextInterface
     {
-        $context = new ContextStub();
-        $context->setVendorPath(Path::join(__DIR__, '/Fixtures'));
-        $context->setEdition(Edition::Community);
+        return $this->getContextWithVendorPath(Path::join(__DIR__, 'Fixtures'));
+    }
 
-        return $context;
+    private function getContextWithVendorPath(string $vendorPath): BasicContextInterface
+    {
+        return $this->createConfiguredStub(BasicContextInterface::class, [
+            'getVendorPath' => $vendorPath,
+            'getComposerVendorName' => 'oxid-esales',
+            'getEdition' => Edition::Community,
+            'getOutPath' => $this->outPath,
+        ]);
     }
 
     private function insertProducts(): void
