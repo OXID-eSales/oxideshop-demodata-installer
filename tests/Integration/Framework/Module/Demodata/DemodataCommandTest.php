@@ -69,13 +69,13 @@ class DemodataCommandTest extends TestCase
 
     private function createContext($vendorPath = __DIR__ . '/Fixtures'): BasicContext
     {
-        $context = $this->getMockBuilder(BasicContext::class)->onlyMethods(['getFacts'])->getMock();
-        $facts = $this->getMockBuilder(Facts::class)->onlyMethods(['getVendorPath', 'getEdition'])->getMock();
+        $context = $this->getStubBuilder(BasicContext::class)->onlyMethods(['getFacts'])->getStub();
+        $facts = $this->getStubBuilder(Facts::class)->onlyMethods(['getVendorPath', 'getEdition'])->getStub();
 
-        $facts->expects($this->any())->method('getVendorPath')->willReturn($vendorPath);
+        $facts->method('getVendorPath')->willReturn($vendorPath);
         $facts->method('getEdition')->willReturn('CE');
 
-        $context->expects($this->any())->method('getFacts')->willReturn($facts);
+        $context->method('getFacts')->willReturn($facts);
 
         return $context;
     }
