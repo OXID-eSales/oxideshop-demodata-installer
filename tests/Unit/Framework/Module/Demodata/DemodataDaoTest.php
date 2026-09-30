@@ -131,8 +131,8 @@ final class DemodataDaoTest extends TestCase
             ->onlyMethods(['getVendorPath', 'getEdition'])
             ->getMock();
 
-        $context->expects($this->any())->method('getVendorPath')->willReturn($vendorPath);
-        $context->expects($this->any())->method('getEdition')->willReturn('CE');
+        $context->method('getVendorPath')->willReturn($vendorPath);
+        $context->method('getEdition')->willReturn('CE');
 
         return $context;
     }

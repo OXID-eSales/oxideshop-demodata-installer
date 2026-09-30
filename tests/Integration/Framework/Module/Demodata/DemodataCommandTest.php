@@ -72,10 +72,10 @@ class DemodataCommandTest extends TestCase
         $context = $this->getMockBuilder(BasicContext::class)->onlyMethods(['getFacts'])->getMock();
         $facts = $this->getMockBuilder(Facts::class)->onlyMethods(['getVendorPath', 'getEdition'])->getMock();
 
-        $facts->expects($this->any())->method('getVendorPath')->willReturn($vendorPath);
+        $facts->method('getVendorPath')->willReturn($vendorPath);
         $facts->method('getEdition')->willReturn('CE');
 
-        $context->expects($this->any())->method('getFacts')->willReturn($facts);
+        $context->method('getFacts')->willReturn($facts);
 
         return $context;
     }
