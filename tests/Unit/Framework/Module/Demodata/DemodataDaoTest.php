@@ -127,9 +127,9 @@ final class DemodataDaoTest extends TestCase
 
     private function createContext($vendorPath = __DIR__ . '/Fixtures'): BasicContextInterface
     {
-        $context = $this->getMockBuilder(BasicContext::class)
+        $context = $this->getStubBuilder(BasicContext::class)
             ->onlyMethods(['getVendorPath', 'getEdition'])
-            ->getMock();
+            ->getStub();
 
         $context->method('getVendorPath')->willReturn($vendorPath);
         $context->method('getEdition')->willReturn('CE');
